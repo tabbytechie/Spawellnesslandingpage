@@ -1,25 +1,39 @@
 import { Flower2 } from 'lucide-react';
 
+// Loading Overlay Component (appears inside the same page)
+export function LoadingOverlay() {
+  return (
+    <div className="absolute inset-0 z-40 flex items-center justify-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+      <div className="flex flex-col items-center gap-6 px-4">
+        {/* New CSS-based Spinner Loader */}
+        <div className="loader"></div>
+        
+        {/* Loading text with animated dots */}
+        <div className="flex items-center gap-1">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">Loading</p>
+          <div className="flex gap-1">
+            <span className="w-1.5 h-1.5 bg-emerald-700 dark:bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+            <span className="w-1.5 h-1.5 bg-emerald-700 dark:bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+            <span className="w-1.5 h-1.5 bg-emerald-700 dark:bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+          </div>
+        </div>
+        
+        {/* Tagline */}
+        <p className="text-xs sm:text-sm text-gray-400 dark:text-gray-500 animate-fade-in text-center max-w-xs">
+          Preparing your wellness experience...
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Full Screen Loading Component (previous implementation)
 export function Loading() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-gray-900 transition-colors">
       <div className="flex flex-col items-center gap-6 px-4">
-        {/* Animated Spa Icon */}
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24">
-          {/* Outer ring */}
-          <div className="absolute inset-0 rounded-full border-4 border-emerald-200 dark:border-emerald-900 opacity-30"></div>
-          
-          {/* Spinning ring */}
-          <div className="absolute inset-0 rounded-full border-4 border-emerald-700 dark:border-emerald-500 border-t-transparent animate-spin"></div>
-          
-          {/* Secondary spinning ring (slower, opposite direction) */}
-          <div className="absolute inset-2 rounded-full border-3 border-emerald-500 dark:border-emerald-600 border-b-transparent animate-spin-slow-reverse"></div>
-          
-          {/* Center icon */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Flower2 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-emerald-700 dark:text-emerald-400 animate-pulse-slow" />
-          </div>
-        </div>
+        {/* New CSS-based Spinner Loader */}
+        <div className="loader"></div>
         
         {/* Loading text with animated dots */}
         <div className="flex items-center gap-1">
@@ -77,12 +91,12 @@ export function InlineLoader() {
   return (
     <div className="flex items-center justify-center py-8 sm:py-12">
       <div className="flex flex-col items-center gap-3 sm:gap-4">
-        <div className="relative w-12 h-12 sm:w-16 sm:h-16">
-          <div className="absolute inset-0 rounded-full border-3 border-emerald-200 dark:border-emerald-900"></div>
-          <div className="absolute inset-0 rounded-full border-3 border-emerald-700 dark:border-emerald-500 border-t-transparent animate-spin"></div>
-        </div>
+        {/* New CSS-based Small Spinner Loader */}
+        <div className="loader-small"></div>
         <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 animate-pulse">Loading...</p>
       </div>
     </div>
   );
 }
+
+export default Loading;
