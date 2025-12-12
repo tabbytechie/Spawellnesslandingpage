@@ -1,0 +1,206 @@
+version: '3.8'
+
+services:
+  # API Gateway
+  api-gateway:
+    build: ./backend/api-gateway
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - user-service
+      - booking-service
+      - service-catalog-service
+      - notification-service
+      - payment-service
+      - review-service
+      - admin-service
+      - search-service
+
+  # User Service
+  user-service:
+    build: ./backend/user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=user-db
+      - DB_PORT=5432
+    depends_on:
+      - user-db
+
+  # Booking Service
+  booking-service:
+    build: ./backend/booking-service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=booking-db
+      - DB_PORT=5432
+    depends_on:
+      - booking-db
+
+  # Service Catalog Service
+  service-catalog-service:
+    build: ./backend/service-catalog-service
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=catalog-db
+      - DB_PORT=5432
+    depends_on:
+      - catalog-db
+
+  # Notification Service
+  notification-service:
+    build: ./backend/notification-service
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=notification-db
+      - DB_PORT=5432
+    depends_on:
+      - notification-db
+
+  # Payment Service
+  payment-service:
+    build: ./backend/payment-service
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=payment-db
+      - DB_PORT=5432
+    depends_on:
+      - payment-db
+
+  # Review Service
+  review-service:
+    build: ./backend/review-service
+    ports:
+      - "3007:3007"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=review-db
+      - DB_PORT=5432
+    depends_on:
+      - review-db
+
+  # Admin Service
+  admin-service:
+    build: ./backend/admin-service
+    ports:
+      - "3008:3008"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=admin-db
+      - DB_PORT=5432
+    depends_on:
+      - admin-db
+
+  # Search Service
+  search-service:
+    build: ./backend/search-service
+    ports:
+      - "3009:3009"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=search-db
+      - DB_PORT=5432
+    depends_on:
+      - search-db
+
+  # Databases
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_service_db
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+      - ./backend/user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  booking-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: booking_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: booking_service_db
+    volumes:
+      - booking_db_data:/var/lib/postgresql/data
+      - ./backend/booking-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  catalog-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: catalog_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: catalog_service_db
+    volumes:
+      - catalog_db_data:/var/lib/postgresql/data
+      - ./backend/service-catalog-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  notification-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: notification_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: notification_service_db
+    volumes:
+      - notification_db_data:/var/lib/postgresql/data
+      - ./backend/notification-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  payment-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: payment_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: payment_service_db
+    volumes:
+      - payment_db_data:/var/lib/postgresql/data
+      - ./backend/payment-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  review-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: review_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: review_service_db
+    volumes:
+      - review_db_data:/var/lib/postgresql/data
+      - ./backend/review-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  admin-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: admin_service_db
+    volumes:
+      - admin_db_data:/var/lib/postgresql/data
+      - ./backend/admin-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  search-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: search_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: search_service_db
+    volumes:
+      - search_db_data:/var/lib/postgresql/data
+      - ./backend/search-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  user_db_data:
+  booking_db_data:
+  catalog_db_data:
+  notification_db_data:
+  payment_db_data:
+  review_db_data:
+  admin_db_data:
+  search_db_data:

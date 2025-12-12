@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # User Service
+  user-service:
+    build: ./backend/user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=user-db
+      - DB_PORT=5432
+    depends_on:
+      - user-db
+
+  # User Database
+  user-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user_service
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_service_db
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+      - ./backend/user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  user_db_data:
